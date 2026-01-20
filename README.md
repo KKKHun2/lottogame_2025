@@ -21,14 +21,6 @@
 
   <h3 style="font-size: 18px; margin: 14px 0 6px; font-weight: 800;">1) 로또 회차 데이터 수집 및 저장</h3>
   <ul style="margin: 0 0 14px 18px; padding: 0; font-size: 16px;">
-    <li>
-      GitHub 미러 API 사용:
-      <div style="margin: 8px 0;">
-        <code style="display: inline-block; background: #f6f8fa; border: 1px solid #e5e7eb; padding: 8px 10px; border-radius: 8px; font-size: 14px;">
-          https://smok95.github.io/lotto/results/{회차}.json
-        </code>
-      </div>
-    </li>
     <li>회차별 당첨 번호(6개 + 보너스)를 가져와서 <b>Zustand store</b> + <b>LocalStorage(persist)</b>에 저장</li>
     <li>버튼 클릭 시:
       <ul style="margin: 6px 0 0 18px; padding: 0;">
