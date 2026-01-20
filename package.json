@@ -9,16 +9,24 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "next": "16.1.4",
-    "react": "19.2.3",
-    "react-dom": "19.2.3"
+    "axios": "^1.13.2",
+    "next": "^15.5.9",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "styled-components": "^6.3.8",
+    "zustand": "^5.0.10"
   },
   "devDependencies": {
     "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
+    "@types/react": "18.2.66",
+    "@types/react-dom": "18.2.22",
+    "@types/styled-components": "^5.1.36",
     "eslint": "^9",
-    "eslint-config-next": "16.1.4",
+    "eslint-config-next": "^15.5.9",
     "typescript": "^5"
+  },
+  "overrides": {
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
   }
 }
