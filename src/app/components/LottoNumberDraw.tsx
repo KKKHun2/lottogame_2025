@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import LottoDataUpdater from './AddLotto';
 import { useLottoStore } from '@/store/lottoStore';
@@ -111,16 +111,30 @@ export default function LottoNumberDraw() {
 	const lottoNumbers = useLottoStore((s) => s.lottoNumbers);
 
 	const [generatedNumbers, setGeneratedNumbers] = useState<number[]>([]);
+	const promptedRef = useRef(false);
 
-	const handleNameChange = () => {
-		const inputName = prompt('이름을 입력해주세요:');
-		if (inputName) {
-			setUserName(inputName);
-		}
-	};
+  useEffect(() => {
+    if (promptedRef.current) return;
+    promptedRef.current = true;
+
+    if (userName) return;
+
+    let name: string | null = null;
+
+    while (true) {
+      name = window.prompt('이름을 꼭 입력해주세요:');
+      if (name === null) continue; // 취소해도 다시 뜸
+
+      const trimmed = name.trim();
+      if (!trimmed) continue; // 빈값이면 다시 뜸
+
+      setUserName(trimmed);
+      break;
+    }
+  }, [userName, setUserName]);
 
 	const generateRandomNumbers = () => {
-		const allNumbers = lottoNumbers.flat();
+		const allNumbers = lottoNumbers.flatMap((arr) => arr.slice(0, 6));
 		if (allNumbers.length === 0) return;
 
 		const uniqueRandomNumbers: number[] = [];
@@ -145,7 +159,7 @@ export default function LottoNumberDraw() {
 				<LottoDataUpdater />
 			</TilteBox>
 
-			{userName ? <UserName>안녕하세요, {userName} 님!</UserName> : <Button onClick={handleNameChange}>이름 입력</Button>}
+			<UserName>안녕하세요, {userName ?? '손님'} 님!</UserName>
 
 			<Button onClick={generateRandomNumbers}>{generatedNumbers.length > 0 ? '다시뽑기' : '번호뽑기'}</Button>
 
