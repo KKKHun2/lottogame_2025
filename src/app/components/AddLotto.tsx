@@ -104,10 +104,26 @@ export default function LottoDataUpdater() {
 			// 자동 버튼 흐름도 이어가려면 startDrawNo를 drawNo+1로 맞춰줌
 			setStartDrawNo(drawNo + 1);
 		} catch (e) {
-			console.error('API 호출 중 오류 발생:', e);
-			window.alert('회차 추가 실패: 콘솔 로그를 확인해주세요.');
-		}
-	};
+      // axios 에러인지 확인
+      if (axios.isAxiosError(e)) {
+        const status = e.response?.status;
+
+        // 404 = 해당 회차 데이터가 없음(대개 최신 회차 초과)
+        if (status === 404) {
+          const tried = targetDrawNo;
+          const latest = tried - 1;
+
+          window.alert(`최신 회차(${latest}회차)까지만 데이터가 존재합니다.`);
+          // 자동 버튼 흐름 보정: 최신 회차+1로 유지(다시 누르면 같은 404 반복 방지)
+          setStartDrawNo(tried);
+          return;
+        }
+      }
+
+      console.error('API 호출 중 오류 발생:', e);
+      window.alert('회차 추가 실패: 콘솔 로그를 확인해주세요.');
+    }
+  };
 
 	return (
 		<Row>
